@@ -1,7 +1,8 @@
 import React from 'react';
 import { Button, View, Text } from 'react-native';
 
-function DetailsScreen({ navigation }) {
+
+const DetailsScreen = ({ navigation }) => {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <Text>Details Ecran</Text>
