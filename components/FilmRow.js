@@ -1,15 +1,17 @@
 import React from 'react'
 import { View, Text, Image, StyleSheet } from 'react-native'
 
-const UserRow = props => (
+const FilmRow = props => (
   <View style={styles.row}>
-    <Image style={styles.picture} source={{ uri: props.picture }} />
+    <Image style={styles.picture} source={{ uri: props.Poster }} />
     <View>
-      <Text style={styles.primaryText}>{props.name + ' ' + props.firstName}</Text>
-      <Text style={styles.secondaryText}>{props.email}</Text>
+      <Text style={styles.primaryText}>{props.title + ' - Année de sortie :' + props.year}</Text>
+      <Text style={styles.secondaryText}>{'Type : ' + props.genre}</Text>
+      <Text style={styles.secondaryText}>{'Directeur : ' + props.director}</Text>
     </View>
   </View>
 )
+
 
 const styles = StyleSheet.create({
   row: { flexDirection: 'row', alignItems: 'center', padding: 12 },
@@ -23,4 +25,4 @@ const styles = StyleSheet.create({
   secondaryText: { color: 'grey' },
 })
 
-export default UserRow;
+export default FilmRow;

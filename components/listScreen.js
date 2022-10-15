@@ -1,6 +1,8 @@
 import React from 'react'
 import { StyleSheet, View, Button, Text } from 'react-native'
-import UserList from './UserList'
+import FilmList from './FilmList'
+
+const customData = require('./resource/films.json');
 
 const sampleData = [
   {
@@ -30,7 +32,7 @@ const sampleData = [
 const ListScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
-      <UserList data={sampleData} />
+      <FilmList data={customData} />
       <Text>List Ecran</Text>
       <Button title="Accueil" onPress={() => navigation.navigate('Details', { name: 'Details' })} />
       <Button title="Return" onPress={() => navigation.goBack()} />
