@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, FlatList, Text, View, StyleSheet } from 'react-native';
+import { ActivityIndicator, FlatList, Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 
 
 const ListScreen = ({ navigation }) => {
@@ -20,6 +20,9 @@ const ListScreen = ({ navigation }) => {
     getMovies();
   }, []);
 
+  const Separator = () => (
+    <View style={styles.separator} />
+  );
 
   return (
     <View>
@@ -27,13 +30,18 @@ const ListScreen = ({ navigation }) => {
         <FlatList
           data={data}
           renderItem={({ item }) => (
+            <TouchableOpacity
+            onPress={() => navigation.navigate('Details', {item:item})}
+            >
             <View style={styles.row}>
               <View >
                 <Text style={styles.primaryText}>{item.Title + ' - Année de sortie : ' + item.Year}</Text>
                 <Text style={styles.secondaryText}>{'Genre : ' + item.Genre}</Text>
                 <Text style={styles.secondaryText}>{'Directeur : ' + item.Director}</Text>
+                <Separator />
               </View>
             </View>
+            </TouchableOpacity>
           )}
         />
       )}
@@ -51,6 +59,11 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
   secondaryText: { color: 'grey' },
+  separator: {
+    marginVertical: 8,
+    borderBottomColor: '#737373',
+    borderBottomWidth: StyleSheet.hairlineWidth,
+  },
 })
 
 export default ListScreen;
