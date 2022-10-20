@@ -1,16 +1,19 @@
 import React from 'react'
 import { View, Text, Image, StyleSheet } from 'react-native'
 
-const FilmRow = props => (
-  <View style={styles.row}>
-    <Image style={styles.picture} source={{ uri: props.Poster }} />
-    <View>
-      <Text style={styles.primaryText}>{props.title + ' - Année de sortie :' + props.year}</Text>
-      <Text style={styles.secondaryText}>{'Type : ' + props.genre}</Text>
-      <Text style={styles.secondaryText}>{'Directeur : ' + props.director}</Text>
+// définition de l’apparence d’un item
+const FilmRow = (props) => {
+  return (
+    <View style={styles.row}>
+      <Image style={styles.picture} source={{ uri: props.poster }} />
+      <View>
+        <Text style={styles.primaryText}>{props.title + ' - Année de sortie : ' + props.year}</Text>
+        <Text style={styles.secondaryText}>{'Type : ' + props.genre}</Text>
+        <Text style={styles.secondaryText}>{'Directeur : ' + props.director}</Text>
+      </View>
     </View>
-  </View>
-)
+  );
+}
 
 
 const styles = StyleSheet.create({

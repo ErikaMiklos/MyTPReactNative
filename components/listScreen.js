@@ -1,44 +1,57 @@
-import React from 'react'
-import { StyleSheet, View, Button, Text } from 'react-native'
-import FilmList from './FilmList'
+import React, { useEffect, useState } from 'react';
+import { ActivityIndicator, FlatList, Text, View, StyleSheet } from 'react-native';
 
-const customData = require('./resource/films.json');
-
-const sampleData = [
-  {
-    name: { title: 'mr', first: 'karl', last: 'johnson' },
-    email: 'karl.johnson@example.com',
-    picture: {
-      thumbnail: 'https://randomuser.me/api/portraits/thumb/men/62.jpg',
-    },
-  },
-  {
-    name: { title: 'mrs', first: 'asuncion', last: 'gomez' },
-    email: 'asuncion.gomez@example.com',
-    picture: {
-      thumbnail: 'https://randomuser.me/api/portraits/thumb/women/52.jpg',
-    },
-    nat: 'ES',
-  },
-  {
-    name: { title: 'miss', first: 'gilcenira', last: 'ribeiro' },
-    email: 'gilcenira.ribeiro@example.com',
-    picture: {
-      thumbnail: 'https://randomuser.me/api/portraits/thumb/women/21.jpg',
-    },
-  },
-]
 
 const ListScreen = ({ navigation }) => {
-  return (
-    <View style={styles.container}>
-      <FilmList data={customData} />
-      <Text>List Ecran</Text>
-      <Button title="Accueil" onPress={() => navigation.navigate('Details', { name: 'Details' })} />
-      <Button title="Return" onPress={() => navigation.goBack()} />
-    </View>
-  );
-}
 
-const styles = StyleSheet.create({ container: { flex: 1, paddingTop: 20 } })
+  const [isLoading, setLoading] = useState(true);
+  const [data, setData] = useState([]);
+
+  const getMovies = async () => {
+    try {
+      const response = await fetch('https://gist.githubusercontent.com/saniyusuf/406b843afdfb9c6a86e25753fe2761f4/raw/523c324c7fcc36efab8224f9ebb7556c09b69a14/Film.JSON');
+      const json = await response.json();
+      setData(json);
+    } catch (error) { console.error(error); }
+    finally {setLoading(false); }
+  }
+
+  useEffect(() => {
+    getMovies();
+  }, []);
+
+
+  return (
+    <View>
+      {isLoading ? <ActivityIndicator/> : (
+        <FlatList
+          data={data}
+          renderItem={({ item }) => (
+            <View style={styles.row}>
+              <View >
+                <Text style={styles.primaryText}>{item.Title + ' - Année de sortie : ' + item.Year}</Text>
+                <Text style={styles.secondaryText}>{'Genre : ' + item.Genre}</Text>
+                <Text style={styles.secondaryText}>{'Directeur : ' + item.Director}</Text>
+              </View>
+            </View>
+          )}
+        />
+      )}
+   </View>
+  );
+
+};
+
+const styles = StyleSheet.create({
+  row: { flexDirection: 'row', alignItems: 'center', padding: 12 },
+  primaryText: {
+    fontWeight: 'bold',
+    fontSize: 14,
+    color: 'black',
+    marginBottom: 4,
+  },
+  secondaryText: { color: 'grey' },
+})
+
 export default ListScreen;
+
