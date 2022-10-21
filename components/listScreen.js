@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, FlatList, Text, View, StyleSheet, TouchableOpacity } from 'react-native';
-
+import { SearchBar } from 'react-native-elements';
 
 const ListScreen = ({ navigation }) => {
 
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
+  const [text, setText] = useState('');
 
   const getMovies = async () => {
     try {
@@ -20,15 +22,33 @@ const ListScreen = ({ navigation }) => {
     getMovies();
   }, []);
 
+  const search = (text) => {
+    setText(text);
+
+    setFilteredData(
+      data.filter( item => item.Title.toLowerCase() === text.toLowerCase() )
+    );
+
+  };
+
   const Separator = () => (
     <View style={styles.separator} />
   );
 
   return (
-    <View style={styles.container}>
-      {isLoading ? <ActivityIndicator/> : (
+    isLoading ? (<ActivityIndicator/>) : (
+      <View style={styles.container}>
+        <SearchBar
+          round={true}
+          lightTheme={true}
+          placeholder="Recherche par titre"
+          autoCapitalize='none'
+          autoCorrect={false}
+          onChangeText={text => search(text)}
+          value={text}
+        />
         <FlatList
-          data={data}
+          data={filteredData && filteredData.length > 0 ? filteredData : data}
           renderItem={({ item }) => (
             <TouchableOpacity
               onPress={() => navigation.navigate('Details', {item:item})}
@@ -41,8 +61,8 @@ const ListScreen = ({ navigation }) => {
             </TouchableOpacity>
           )}
         />
-      )}
-   </View>
+      </View>
+    )
   );
 
 };
@@ -52,6 +72,11 @@ const styles = StyleSheet.create({
     alignItems: 'center', 
     justifyContent: 'center', 
     padding: 10 
+  },
+  filterBar: {
+    flexDirection: 'row',
+    // flex: 0.2,
+    height: 40,
   },
   row: { 
     flexDirection: 'row', 
