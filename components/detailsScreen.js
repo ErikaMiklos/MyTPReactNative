@@ -12,7 +12,7 @@ const DetailsScreen = ({ route, navigation }) => {
         <ScrollView>
           <View style={styles.row}>
             <Image style={styles.picture} source={{ uri: film.Images[0] }} />
-            <Text style={styles.primaryText}>Titre: {film.Title}</Text>
+            <Text style={styles.title}>{film.Title}</Text>
           </View>
           <Separator />
           <Text style={styles.secondaryText}>Année de sortie: {film.Year}</Text>
@@ -24,10 +24,15 @@ const DetailsScreen = ({ route, navigation }) => {
           <Text style={styles.secondaryText}>Votes imdb: {film.imdbVotes}</Text>
           <Separator />
           <Button 
-          title="Accueil" 
-          color="#f194ff"
-          onPress={() => navigation.navigate('Home', { name: 'Home' })} />
-          <Button title="Return" onPress={() => navigation.goBack()} />
+            title="Accueil" 
+            color="#9c3a96"
+            onPress={() => navigation.navigate('Home', { name: 'Home' })} 
+          />
+          <Button 
+            title="Return" 
+            color="#227476"
+            onPress={() => navigation.goBack()} 
+          />
         </ScrollView>
       </View>
     );
@@ -35,7 +40,9 @@ const DetailsScreen = ({ route, navigation }) => {
 
 const styles = StyleSheet.create({
   row: { 
+    backgroundColor: '#227476',
     flexDirection: 'row', 
+    justifyContent: 'center',
     alignItems: 'center',
     padding: 12 
   },
@@ -45,23 +52,20 @@ const styles = StyleSheet.create({
     padding: 10 
   },
   picture: { 
-    alignItems: 'center',
     width: 50, 
     height: 50, 
-    borderRadius: 5, 
-    marginBottom: 5 
+    borderRadius: 5 
   },
-  primaryText: {
+  title: {
     fontWeight: 'bold',
     fontSize: 18,
-    color: 'black',
-    marginBottom: 4,
-    marginLeft: 20
+    color: 'white',
+    marginLeft: 30
   },
-  secondaryText: { color: 'grey' },
+  secondaryText: { color: 'black' },
   separator: {
     marginVertical: 8,
-    borderBottomColor: '#737373',
+    borderBottomColor: '#302f2f',
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
 })

@@ -25,22 +25,19 @@ const ListScreen = ({ navigation }) => {
   );
 
   return (
-    <View>
+    <View style={styles.container}>
       {isLoading ? <ActivityIndicator/> : (
         <FlatList
           data={data}
           renderItem={({ item }) => (
             <TouchableOpacity
-            onPress={() => navigation.navigate('Details', {item:item})}
+              onPress={() => navigation.navigate('Details', {item:item})}
             >
-            <View style={styles.row}>
-              <View >
-                <Text style={styles.primaryText}>{item.Title + ' - Année de sortie : ' + item.Year}</Text>
-                <Text style={styles.secondaryText}>{'Genre : ' + item.Genre}</Text>
-                <Text style={styles.secondaryText}>{'Directeur : ' + item.Director}</Text>
-                <Separator />
-              </View>
-            </View>
+            <Text style={styles.primaryText}>{item.Title}</Text>
+            <Text style={styles.secondaryText}>{'Année de sortie : ' + item.Year}</Text>
+            <Text style={styles.secondaryText}>{'Genre : ' + item.Genre}</Text>
+            <Text style={styles.secondaryText}>{'Directeur : ' + item.Director}</Text>
+            <Separator />
             </TouchableOpacity>
           )}
         />
@@ -51,14 +48,28 @@ const ListScreen = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  row: { flexDirection: 'row', alignItems: 'center', padding: 12 },
+  container: { 
+    alignItems: 'center', 
+    justifyContent: 'center', 
+    padding: 10 
+  },
+  row: { 
+    flexDirection: 'row', 
+    alignItems: 'center', 
+    padding: 12 
+  },
   primaryText: {
+    textAlign: 'center',
+    lineHeight: 30,
+    backgroundColor: '#dfac34fe',
     fontWeight: 'bold',
     fontSize: 14,
     color: 'black',
     marginBottom: 4,
   },
-  secondaryText: { color: 'grey' },
+  secondaryText: { 
+    color: 'black' 
+  },
   separator: {
     marginVertical: 8,
     borderBottomColor: '#737373',
