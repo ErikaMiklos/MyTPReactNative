@@ -7,7 +7,9 @@ const ListScreen = ({ navigation }) => {
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
-  const [text, setText] = useState('');
+  const [keywordTitle, setKeywordTitle] = useState('');
+  const [keywordDirector, setKeywordDirector] = useState('');
+  const [keywordActor, setKeywordActor] = useState('');
 
   const getMovies = async () => {
     try {
@@ -22,11 +24,29 @@ const ListScreen = ({ navigation }) => {
     getMovies();
   }, []);
 
-  const search = (text) => {
-    setText(text);
+  const searchByTitle = (text) => {
+    setKeywordTitle(text);
 
     setFilteredData(
-      data.filter( item => item.Title.toLowerCase() === text.toLowerCase() )
+      data.filter( item => item.Title.toLowerCase().includes(text.toLowerCase()) )
+    );
+
+  };
+
+  const searchByDirecteur = (text) => {
+    setKeywordDirector(text);
+
+    setFilteredData(
+      data.filter( item => item.Director.toLowerCase().includes(text.toLowerCase()) )
+    );
+
+  };
+
+  const searchByActor = (text) => {
+    setKeywordActor(text);
+
+    setFilteredData(
+      data.filter( item => item.Actors.toLowerCase().includes(text.toLowerCase()) )
     );
 
   };
@@ -44,8 +64,26 @@ const ListScreen = ({ navigation }) => {
           placeholder="Recherche par titre"
           autoCapitalize='none'
           autoCorrect={false}
-          onChangeText={text => search(text)}
-          value={text}
+          onChangeText={text => searchByTitle(text)}
+          value={keywordTitle}
+        />
+        <SearchBar
+          round={true}
+          lightTheme={true}
+          placeholder="Recherche par directeur"
+          autoCapitalize='none'
+          autoCorrect={false}
+          onChangeText={text => searchByDirecteur(text)}
+          value={keywordDirector}
+        />
+        <SearchBar
+          round={true}
+          lightTheme={true}
+          placeholder="Recherche par actor"
+          autoCapitalize='none'
+          autoCorrect={false}
+          onChangeText={text => searchByActor(text)}
+          value={keywordActor}
         />
         <FlatList
           data={filteredData && filteredData.length > 0 ? filteredData : data}
@@ -75,7 +113,6 @@ const styles = StyleSheet.create({
   },
   filterBar: {
     flexDirection: 'row',
-    // flex: 0.2,
     height: 40,
   },
   row: { 
@@ -99,7 +136,7 @@ const styles = StyleSheet.create({
     marginVertical: 8,
     borderBottomColor: '#737373',
     borderBottomWidth: StyleSheet.hairlineWidth,
-  },
+  }
 })
 
 export default ListScreen;
